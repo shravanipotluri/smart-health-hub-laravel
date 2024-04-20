@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -63,7 +64,8 @@ class UserController extends Controller
     
         $user = User::where('email', $validated['email'])->first();
     
-        if (!$user || $user->password !== $validated['password']) {
+        // if (!$user || $user->password !== $validated['password']) {
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
     
