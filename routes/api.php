@@ -6,6 +6,7 @@ use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\MedicationDispensationRecordController;
+use App\Http\Controllers\HealthcareProviderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +41,7 @@ Route::get('/users/role/{role}', 'UserController@getUsersByRole');
 
 
 Route::get('/medical-records/{userId}', 'MedicalRecordController@index');
+Route::get('/medical-records', 'MedicalRecordController@hpIndex');
 Route::post('/medical-records', 'MedicalRecordController@store');
 Route::put('/medical-records/{recordId}', 'MedicalRecordController@update');
 Route::delete('/medical-records/{recordId}', 'MedicalRecordController@destroy');
@@ -65,6 +67,7 @@ Route::put('/appointments/{appointmentId}', 'AppointmentController@update');
 Route::delete('/appointments/{appointmentId}', 'AppointmentController@destroy');
 
 Route::get('/prescriptions/{userId}', 'PrescriptionController@index');
+Route::get('/prescriptions/hp/{hpId}', 'PrescriptionController@hpindex');
 Route::post('/prescriptions', 'PrescriptionController@store');
 Route::put('/prescriptions/{prescriptionId}', 'PrescriptionController@update');
 Route::delete('/prescriptions/{prescriptionId}', 'PrescriptionController@destroy');

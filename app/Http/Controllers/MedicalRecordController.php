@@ -133,6 +133,11 @@ class MedicalRecordController extends Controller
         $medicalRecords = MedicalRecord::where('user_id', $userId)->get();
         return response()->json($medicalRecords);
     }
+    public function hpIndex()
+    {
+        $medicalRecords = MedicalRecord::all();
+        return response()->json($medicalRecords);
+    }
 
     /**
      * Create a new medical record entry.
