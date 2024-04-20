@@ -109,6 +109,12 @@ class PrescriptionController extends Controller
         return response()->json($prescriptions);
     }
 
+    public function hpindex($hpId)
+    {
+        $prescriptions = Prescription::where('healthcare_provider_id', $hpId)->get();
+        return response()->json($prescriptions);
+    }
+
     /**
      * Create a new prescription record.
      *

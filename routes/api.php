@@ -21,6 +21,7 @@ Route::post('/users', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
 Route::get('/users', [UserController::class, 'getAllUsers']);
+Route::get('/users/role/{role}', 'UserController@getUsersByRole');
 
 
 // Route::get('/medical_records', [MedicalRecordController::class, 'index']);
@@ -43,9 +44,22 @@ Route::post('/medical-records', 'MedicalRecordController@store');
 Route::put('/medical-records/{recordId}', 'MedicalRecordController@update');
 Route::delete('/medical-records/{recordId}', 'MedicalRecordController@destroy');
 
+Route::post('/openai', function (Request $request) {
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer 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',
+        'Content-Type' => 'application/json'
+    ])->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [['role' => 'user', 'content' => $request->input('prompt')]],
+                'max_tokens' => 500
+            ]);
+    return $response->json();
+});
 
-
+Route::get('/providers', [HealthcareProviderController::class, 'getAllProviders']);
+Route::get('/providers/{userId}', [HealthcareProviderController::class, 'getProvider']);
 Route::get('/appointments/{userId}', 'AppointmentController@index');
+Route::get('/appointments/hp/{hpId}', 'AppointmentController@hpindex');
 Route::post('/appointments', 'AppointmentController@store');
 Route::put('/appointments/{appointmentId}', 'AppointmentController@update');
 Route::delete('/appointments/{appointmentId}', 'AppointmentController@destroy');

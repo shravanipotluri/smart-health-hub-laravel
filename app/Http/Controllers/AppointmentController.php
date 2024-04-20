@@ -96,6 +96,11 @@ class AppointmentController extends Controller
         $appointments = Appointment::where('user_id', $userId)->get();
         return response()->json($appointments);
     }
+    public function hpindex($hpId)
+    {
+        $appointments = Appointment::where('healthcare_provider_id', $hpId)->get();
+        return response()->json($appointments);
+    }
 
     /**
      * Create a new appointment.

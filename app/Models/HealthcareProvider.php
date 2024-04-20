@@ -10,7 +10,7 @@ class HealthcareProvider extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'specialty', 'location', 'bio'
+        'user_id', 'provider_name', 'specialty', 'location', 'bio', 'rating'
     ];
 
     public function user()
