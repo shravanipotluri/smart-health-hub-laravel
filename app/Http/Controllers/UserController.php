@@ -92,7 +92,7 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        $users = User::all(['id', 'role', 'name']); 
+        $users = User::all();
         return response()->json([
             'message' => 'Users retrieved successfully',
             'users' => $users
@@ -106,8 +106,46 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-
-
+    public function update(Request $request, $id)
+    {
+        // Retrieve the user by id
+        $user = User::findOrFail($id);
+    
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8',
+            'date_of_birth' => 'nullable|date',
+            'address' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:15',
+            'role' => 'sometimes|string|in:Patient,Healthcare Provider,Administrator,Pharmacist,Health Administrator',
+        ]);
+    
+        // Update the user with validated data
+        $user->fill($validatedData);
+        if (isset($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+        $user->save();
+    
+        // Return a JSON response on success
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user
+        ], 200);
+    }
+    public function destroy($id)
+    {
+        // Retrieve the user by id and delete
+        $user = User::findOrFail($id);
+        $user->delete();
+    
+        // Return a JSON response on success
+        return response()->json([
+            'message' => 'User deleted successfully'
+        ], 200);
+    }
 
 
 }

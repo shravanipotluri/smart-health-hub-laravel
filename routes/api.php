@@ -8,6 +8,11 @@ use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\MedicationDispensationRecordController;
 use App\Http\Controllers\HealthcareProviderController;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\ComplianceController;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +29,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
 Route::get('/users', [UserController::class, 'getAllUsers']);
 Route::get('/users/role/{role}', 'UserController@getUsersByRole');
+Route::put('/users/{id}', 'UserController@update');
+Route::delete('/users/{id}', 'UserController@destroy');
 
 
 // Route::get('/medical_records', [MedicalRecordController::class, 'index']);
@@ -89,3 +96,16 @@ Route::post('/medication-dispensation', 'MedicationDispensationRecordController@
 Route::get('/medication-dispensation/{patientId}', 'MedicationDispensationRecordController@index');
 Route::put('/medication-dispensation/{recordId}', 'MedicationDispensationRecordController@update');
 Route::delete('/medication-dispensation/{recordId}', 'MedicationDispensationRecordController@destroy');
+
+
+Route::get('/facilities', 'FacilityController@showAll');
+Route::post('/facilities', 'FacilityController@store');
+Route::put('/facilities/{facility}', 'FacilityController@update');
+Route::delete('/facilities/{facility}', 'FacilityController@destroy');
+
+
+
+Route::get('/compliances', [ComplianceController::class, 'showAll']);
+Route::post('/compliances', [ComplianceController::class, 'store']);
+Route::put('/compliances/{compliance}', [ComplianceController::class, 'update']);
+Route::delete('/compliances/{compliance}', [ComplianceController::class, 'destroy']);
