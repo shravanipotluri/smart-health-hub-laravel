@@ -108,6 +108,11 @@ class PrescriptionController extends Controller
         $prescriptions = Prescription::where('user_id', $userId)->get();
         return response()->json($prescriptions);
     }
+    public function getAllPrescriptions()
+    {
+        $prescriptions = Prescription::all();
+        return response()->json($prescriptions);
+    }
 
     public function hpindex($hpId)
     {
