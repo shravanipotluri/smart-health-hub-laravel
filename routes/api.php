@@ -7,6 +7,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\MedicationDispensationRecordController;
 use App\Http\Controllers\HealthcareProviderController;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
