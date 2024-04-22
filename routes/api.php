@@ -75,7 +75,7 @@ Route::put('/appointments/{appointmentId}', 'AppointmentController@update');
 Route::delete('/appointments/{appointmentId}', 'AppointmentController@destroy');
 
 Route::get('/prescriptions/{userId}', 'PrescriptionController@index');
-Route::get('/prescriptions/{userEmail}', 'PrescriptionController@emailIndex');
+Route::get('/prescriptions/email/{userEmail}', 'PrescriptionController@emailIndex');
 Route::get('/prescriptions/hp/{hpId}', 'PrescriptionController@hpindex');
 Route::get('/prescriptions', 'PrescriptionController@getAllPrescriptions');
 Route::post('/prescriptions', 'PrescriptionController@store');
