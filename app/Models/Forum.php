@@ -10,7 +10,7 @@ class Forum extends Model
     use HasFactory;
 
     protected $fillable = [
-        'topic', 'category', 'date_created', 'user_id'
+        'topic', 'category','content', 'date_created', 'user_id'
     ];
 
     public function posts()

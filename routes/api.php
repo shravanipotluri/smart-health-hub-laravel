@@ -86,7 +86,9 @@ Route::put('/prescriptions/{prescriptionId}', 'PrescriptionController@update');
 Route::delete('/prescriptions/{prescriptionId}', 'PrescriptionController@destroy');
 
 Route::post('/forums', 'ForumController@store');
-Route::get('/forums', 'ForumController@index');
+Route::get('/forums', 'ForumController@getForums');
+Route::put('/forums/{id}', 'ForumController@update');
+Route::delete('/forums/{id}', 'ForumController@destroy');
 Route::get('/forums/posts', 'PostController@index');
 Route::post('/forums/{forumId}/posts', 'PostController@store');
 Route::put('/posts/{postId}', 'PostController@update');

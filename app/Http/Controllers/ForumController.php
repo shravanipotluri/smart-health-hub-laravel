@@ -14,10 +14,10 @@ class ForumController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $forums = Forums::all();
-        return response()->json($forums);
+    public function getForums() {
+        $forums = Forum::all();
+    
+        return response()->json($forums, 200);
     }
     public function store(Request $request)
     {
@@ -33,5 +33,33 @@ class ForumController extends Controller
 
         $forum = Forum::create($request->all());
         return response()->json($forum, 201);
+    }
+    public function update(Request $request, $id) {
+        $forum = Forum::find($id);
+    
+        if (!$forum) {
+            return response()->json(['message' => 'Forum not found'], 404);
+        }
+    
+        $forum->topic = $request->get('topic', $forum->topic);
+        $forum->category = $request->get('category', $forum->category);
+        $forum->content = $request->get('content', $forum->content);
+        $forum->user_id = $request->get('user_id', $forum->user_id);
+    
+        $forum->save();
+    
+        return response()->json($forum, 200);
+    }
+    
+    public function destroy($id) {
+        $forum = Forum::find($id);
+    
+        if (!$forum) {
+            return response()->json(['message' => 'Forum not found'], 404);
+        }
+    
+        $forum->delete();
+    
+        return response()->json(['message' => 'Forum deleted'], 200);
     }
 }
