@@ -14,6 +14,11 @@ class ForumController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        $forums = Forums::all();
+        return response()->json($forums);
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

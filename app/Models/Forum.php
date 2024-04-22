@@ -17,6 +17,10 @@ class Forum extends Model
     {
         return $this->hasMany(Post::class);
     }
+    public function forums()
+    {
+        return $this->hasMany(Forums::class);
+    }
 
     public function user()
     {

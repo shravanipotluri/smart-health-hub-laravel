@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\MedicationDispensationRecordController;
 use App\Http\Controllers\HealthcareProviderController;
 use Illuminate\Http\Request;
@@ -83,6 +84,7 @@ Route::put('/prescriptions/{prescriptionId}', 'PrescriptionController@update');
 Route::delete('/prescriptions/{prescriptionId}', 'PrescriptionController@destroy');
 
 Route::post('/forums', 'ForumController@store');
+Route::get('/forums', 'ForumController@index');
 Route::get('/forums/posts', 'PostController@index');
 Route::post('/forums/{forumId}/posts', 'PostController@store');
 Route::put('/posts/{postId}', 'PostController@update');
