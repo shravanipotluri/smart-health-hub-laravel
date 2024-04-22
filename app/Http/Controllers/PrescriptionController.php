@@ -108,6 +108,11 @@ class PrescriptionController extends Controller
         $prescriptions = Prescription::where('user_id', $userId)->get();
         return response()->json($prescriptions);
     }
+    public function emailIndex($userEmail)
+    {
+        $prescriptions = Prescription::where('user_email', $userEmail)->get();
+        return response()->json($prescriptions);
+    }
     public function getAllPrescriptions()
     {
         $prescriptions = Prescription::all();
@@ -129,8 +134,9 @@ class PrescriptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
+            'pharmacist_id' => 'required|integer|exists:users,id',
             'healthcare_provider_id' => 'required|integer|exists:healthcare_providers,id',
+            'user_email' => 'required|string|exists:users,email',
             'medication_name' => 'required|string',
             'dosage' => 'required|string',
             'frequency' => 'required|string',
