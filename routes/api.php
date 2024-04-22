@@ -68,6 +68,8 @@ Route::post('/openai', function (Request $request) {
 });
 
 Route::get('/providers', [HealthcareProviderController::class, 'getAllProviders']);
+Route::put('/provider/{id}', 'HealthcareProviderController@update');
+Route::delete('/provider/{id}', 'HealthcareProviderController@destroy');
 Route::get('/providers/{userId}', [HealthcareProviderController::class, 'getProvider']);
 Route::get('/appointments/{userId}', 'AppointmentController@index');
 Route::get('/appointments/hp/{hpId}', 'AppointmentController@hpindex');
