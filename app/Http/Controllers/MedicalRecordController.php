@@ -1,119 +1,4 @@
 <?php
-
-// namespace App\Http\Controllers;
-
-// use Illuminate\Http\Request;
-// use App\Models\MedicalRecord; 
-// use Illuminate\Support\Facades\Validator;
-
-// class MedicalRecordController extends Controller
-// {
-//     /**
-//      * Display a listing of medical records.
-//      *
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function index()
-//     {
-//         $records = MedicalRecord::all();
-//         return response()->json($records);
-//     }
-
-//     /**
-//      * Store a newly created medical record in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function store(Request $request)
-//     {
-//         $validator = Validator::make($request->all(), [
-//             'user_id' => 'required|integer|exists:users,id',
-//             'allergies' => 'required|json',
-//             'conditions' => 'required|json',
-//             'surgeries' => 'nullable|json',
-//             'family_history' => 'nullable|json',
-//             'blood_group' => 'nullable|string',
-//             'lifestyle' => 'nullable|string',
-//             'emergency_contact' => 'nullable|string',
-//             // Add other fields as necessary
-//         ]);
-
-//         if ($validator->fails()) {
-//             return response()->json($validator->errors(), 400);
-//         }
-
-//         $record = MedicalRecord::create($request->all());
-//         return response()->json($record, 201);
-//     }
-
-//     /**
-//      * Display the specified medical record.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function show($id)
-//     {
-//         $record = MedicalRecord::find($id);
-//         if (!$record) {
-//             return response()->json(['message' => 'Record not found'], 404);
-//         }
-//         return response()->json($record);
-//     }
-
-//     /**
-//      * Update the specified medical record in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function update(Request $request, $id)
-//     {
-//         $record = MedicalRecord::find($id);
-//         if (!$record) {
-//             return response()->json(['message' => 'Record not found'], 404);
-//         }
-
-//         $validator = Validator::make($request->all(), [
-//             'allergies' => 'required|json',
-//             'conditions' => 'required|json',
-//             'surgeries' => 'nullable|json',
-//             'family_history' => 'nullable|json',
-//             'blood_group' => 'nullable|string',
-//             'lifestyle' => 'nullable|string',
-//             'emergency_contact' => 'nullable|string',
-//             // Define validation for other fields
-//         ]);
-
-//         if ($validator->fails()) {
-//             return response()->json($validator->errors(), 400);
-//         }
-
-//         $record->update($request->all());
-//         return response()->json($record);
-//     }
-
-//     /**
-//      * Remove the specified medical record from storage.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function destroy($id)
-//     {
-//         $record = MedicalRecord::find($id);
-//         if (!$record) {
-//             return response()->json(['message' => 'Record not found'], 404);
-//         }
-//         $record->delete();
-//         return response()->json(['message' => 'Record deleted successfully']);
-//     }
-// }
-
-
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -146,28 +31,46 @@ class MedicalRecordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
-            'medical_history' => 'nullable|string',
-            'prescriptions' => 'nullable|string',
-            'appointments' => 'nullable|string',
-            'allergies' => 'nullable|string',
-            'immunizations' => 'nullable|string',
-            'vital_signs' => 'nullable|string',
-            'blood_pressure' => 'nullable|string',
-            'lab_results' => 'nullable|string',
-            // Add other fields as necessary
-        ]);
+{
+    $request->validate([
+        'user_id' => 'required',
+        'medical_history' => 'required',
+        'prescriptions' => 'required',
+        'appointments' => 'required',
+        'allergies' => 'required',
+        'blood_group' => 'required',
+        'blood_pressure' => 'nullable|string',
+        'conditions' => 'required',
+        'emergency_contact' => 'required',
+        'family_history' => 'required',
+        'immunizations' => 'required',
+        'lab_results' => 'required',
+        'lifestyle' => 'required',
+        'surgeries' => 'required',
+        'vital_signs' => 'required',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+    $medicalRecord = new MedicalRecord([
+        'user_id' => $request->get('user_id'),
+        'medical_history' => $request->get('medical_history'),
+        'prescriptions' => $request->get('prescriptions'),
+        'appointments' => $request->get('appointments'),
+        'allergies' => $request->get('allergies'),
+        'blood_group' => $request->get('blood_group'),
+        'conditions' => $request->get('conditions'),
+        'emergency_contact' => $request->get('emergency_contact'),
+        'family_history' => $request->get('family_history'),
+        'immunizations' => $request->get('immunizations'),
+        'lab_results' => $request->get('lab_results'),
+        'lifestyle' => $request->get('lifestyle'),
+        'surgeries' => $request->get('surgeries'),
+        'vital_signs' => $request->get('vital_signs'),
+    ]);
 
-        $medicalRecord = MedicalRecord::create($request->all());
-        return response()->json($medicalRecord, 201);
-    }
+    $medicalRecord->save();
 
+    return response()->json($medicalRecord, 201);
+}
     /**
      * Update an existing medical record.
      *
