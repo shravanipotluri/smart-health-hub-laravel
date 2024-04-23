@@ -17,43 +17,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'date_of_birth' => 'nullable|date',
-            'address' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|string|max:15', 
-            'role' => 'required|string|in:Patient,Healthcare Provider,Administrator,Pharmacist,Health Administrator',
-        ]);
-
         try {
-            // Create and save the new user
-            $user = new User([
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'password' => $validatedData['password'], 
-                'date_of_birth' => $validatedData['date_of_birth'],
-                'address' => $validatedData['address'],
-                'phone_number' => $validatedData['phone_number'],
-                'role' => $validatedData['role'],
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8',
+                'date_of_birth' => 'nullable|date',
+                'address' => 'nullable|string|max:255',
+                'phone_number' => 'nullable|string|max:15', 
+                'role' => 'required|string|in:Patient,Healthcare Provider,Administrator,Pharmacist,Health Administrator',
             ]);
+    
+            $user = new User($validatedData);
             $user->save();
-
-            // Return a JSON response on success
+    
             return response()->json([
                 'message' => 'User registered successfully',
                 'user' => $user
             ], 201);
+    
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => 'Registration failed',
+                'messages' => $e->errors()
+            ], 422);
         } catch (\Exception $e) {
-            // Handle any exceptions and return an error response
             return response()->json([
                 'error' => 'Registration failed',
                 'message' => $e->getMessage()
             ], 400);
         }
     }
+    
 
     public function login(Request $request)
     {
@@ -71,23 +66,30 @@ class UserController extends Controller
     
         return response()->json(['message' => 'Login successful', 'user' => $user]);
     }
+
+    
     public function forgotPassword(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:8',
         ]);
-
-        $token = \Str::random(60);
-        \DB::table('password_resets')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => now(),
-        ]);
-
-        // Implement email sending...
-
-        return response()->json(['message' => 'Reset password link sent to your email address']);
+    
+        $user = User::where('email', $validated['email'])->first();
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        $user->password = $validated['password'];
+        $user->save();
+    
+        return response()->json([
+            'message' => 'Password updated successfully'
+        ], 200);
     }
+    
+
 
 
     public function getAllUsers()

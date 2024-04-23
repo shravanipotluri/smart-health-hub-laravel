@@ -32,7 +32,7 @@ Route::get('/users', [UserController::class, 'getAllUsers']);
 Route::get('/users/role/{role}', 'UserController@getUsersByRole');
 Route::put('/users/{id}', 'UserController@update');
 Route::delete('/users/{id}', 'UserController@destroy');
-
+Route::post('/resetpassword', [UserController::class, 'forgotPassword']);
 
 // Route::get('/medical_records', [MedicalRecordController::class, 'index']);
 // Route::post('/medical_records', [MedicalRecordController::class, 'store']);
