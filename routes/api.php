@@ -9,6 +9,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\MedicationDispensationRecordController;
 use App\Http\Controllers\HealthcareProviderController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\MaintenanceController;
 
 use App\Http\Controllers\ComplianceController;
 
@@ -95,7 +96,7 @@ Route::put('/posts/{postId}', 'PostController@update');
 Route::delete('/posts/{postId}', 'PostController@destroy');
 
 Route::post('/incident-reports', 'IncidentReportController@store');
-Route::get('/incident-reports/{userId}', 'IncidentReportController@index');
+Route::get('/incident-reports', 'IncidentReportController@index');
 Route::put('/incident-reports/{reportId}', 'IncidentReportController@update');
 Route::delete('/incident-reports/{reportId}', 'IncidentReportController@destroy');
 
@@ -116,3 +117,6 @@ Route::get('/compliances', [ComplianceController::class, 'showAll']);
 Route::post('/compliances', [ComplianceController::class, 'store']);
 Route::put('/compliances/{compliance}', [ComplianceController::class, 'update']);
 Route::delete('/compliances/{compliance}', [ComplianceController::class, 'destroy']);
+
+Route::get('maintenances/{id}', [MaintenanceController::class, 'show']);
+Route::put('maintenances/{id}', [MaintenanceController::class, 'update']);

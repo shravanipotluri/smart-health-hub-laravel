@@ -17,8 +17,6 @@ class IncidentReportController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'patient_id' => 'required|integer|exists:users,id',
-            'provider_id' => 'required|integer|exists:healthcare_providers,id',
             'description' => 'required|string',
             'actions_taken' => 'required|string',
             'resolution' => 'required|string',
@@ -39,12 +37,14 @@ class IncidentReportController extends Controller
      * @param int $userId
      * @return \Illuminate\Http\Response
      */
-    public function index($userId)
+    public function index()
     {
-        $incidentReports = IncidentReport::where('patient_id', $userId)->get();
+        $incidentReports = IncidentReport::all();
+    
+    
         return response()->json($incidentReports);
     }
-
+    
     /**
      * Update details of an incident report.
      *
