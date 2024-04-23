@@ -155,6 +155,7 @@ class MedicalRecordController extends Controller
             'allergies' => 'nullable|string',
             'immunizations' => 'nullable|string',
             'vital_signs' => 'nullable|string',
+            'blood_pressure' => 'nullable|string',
             'lab_results' => 'nullable|string',
             // Add other fields as necessary
         ]);

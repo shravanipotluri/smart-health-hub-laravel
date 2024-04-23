@@ -11,7 +11,7 @@ class MedicalRecord extends Model
 
     protected $fillable = [
         'user_id', 'medical_history', 'prescriptions', 'appointments', 'allergies', 'immunizations', 
-        'vital_signs', 'lab_results', 'surgeries', 'family_history', 'blood_group', 'lifestyle', 
+        'vital_signs', 'lab_results', 'surgeries', 'family_history', 'blood_group','blood_pressure', 'lifestyle', 
         'emergency_contact', 'conditions'
     ];
 
