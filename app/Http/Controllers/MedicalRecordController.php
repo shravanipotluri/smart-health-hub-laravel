@@ -94,7 +94,13 @@ class MedicalRecordController extends Controller
             'immunizations' => 'nullable|string',
             'vital_signs' => 'nullable|string',
             'lab_results' => 'nullable|string',
-            // Add other fields as necessary
+            'lifestyle' => 'nullable|string',
+            'surgeries' => 'nullable|string',
+            'family_history' => 'nullable|string',
+            'emergency_contact' => 'nullable|string',
+            'conditions' => 'nullable|string',
+            'blood_group' => 'nullable|string',
+            'blood_pressure' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
