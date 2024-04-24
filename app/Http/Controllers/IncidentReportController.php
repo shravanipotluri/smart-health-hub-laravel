@@ -61,6 +61,7 @@ class IncidentReportController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
+            'type' => 'required|string',
             'description' => 'required|string',
             'actions_taken' => 'required|string',
             'resolution' => 'required|string',
