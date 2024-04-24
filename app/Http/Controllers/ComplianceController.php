@@ -25,6 +25,7 @@ class ComplianceController extends Controller
     public function update(Request $request, Compliance $compliance)
     {
         $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
             'status' => 'required|in:Compliant,Pending Review,Non-Compliant',
         ]);
 
